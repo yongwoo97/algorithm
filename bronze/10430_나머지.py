@@ -1,0 +1,5 @@
+n, m, k = map(int, input().split())
+print(f'{(n + m)%k}')
+print(f'{((n%k) + (m%k))%k}')
+print(f'{(n * m) % k}')
+print(f'{((n % k) * (m % k)) % k}')
