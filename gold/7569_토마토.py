@@ -13,6 +13,7 @@ for h in range(c):
 
 dd = [[[0] * a for _ in range(b)] for _ in range(c)]
 day = 0
+
 def bfs():
     global day, move
     while q:
