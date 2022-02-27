@@ -1,2 +1,3 @@
-print(1 % 2)
-test1
+from datetime import datetime
+
+print(datetime.now().date())
