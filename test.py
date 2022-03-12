@@ -1,3 +1,2 @@
-from datetime import datetime
-
-print(datetime.now().date())
+a = [(1, 2), (-1, 3)]
+print(max(a))
