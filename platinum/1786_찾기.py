@@ -20,7 +20,6 @@ def match(text, pat, start):
             for k in range(j-1, 1, -1):
                 if pat[:k] == pat[j - k:j]:
                     return False, start + j - k
-
                 else:
                     continue
 
