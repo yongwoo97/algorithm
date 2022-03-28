@@ -1,1 +1,2 @@
-print(1//2)
+a = '101'
+print(list(a))
