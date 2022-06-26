@@ -1,31 +1,8 @@
 import sys
 input = sys.stdin.readline
 
-a, b = map(int, input().rstrip().split())
-data = [list(map(int, input().split())) for _ in range(a)]
-
-remem = []
-
-while b != 1:
-    if b % 2 == 0:
-        b = b // 2
-        remem.append(2)
-    else:
-        b -= 1
-        remem.append(1)
-remem = remem[::-1]
-
-def square(d):
-    n = len(d)
-    result = [[0] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            cell = 0
-            for t in range(n):
-                cell += d[i][t] * d[t][j]
-            result[i][j] = cell
-
-    return result
+a, b = map(int, input().split())
+data = [[*map(int, input().split())] for _ in range(a)]
 
 def normal(d1, d2):
     n = len(d1)
@@ -35,10 +12,28 @@ def normal(d1, d2):
             cell = 0
             for t in range(n):
                 cell += d1[i][t] * d2[t][j]
-            result[i][j] = cell
+            result[i][j] = cell % 1000
 
     return result
 
+def square(a1, b1):
+    if b1 == 1:
+        for i in range(len(a1)):
+            for j in range(len(a1)):
+                a1[i][j] %= 1000
+        return a1
+
+    tmp = square(a1, b1//2)
+    if b1 % 2:
+        return normal(normal(tmp, tmp), a1)
+    else:
+        return normal(tmp, tmp)
+
+result = square(data, b)
+for i in result:
+    print(*i)
+
+'''
 r = data
 for i in remem:
     if i == 2:
@@ -49,7 +44,7 @@ for i in remem:
 for j in r:
     j = list(map(lambda x : x % 1000, j))
     print(*j)
-
+'''
 #########################
 #아래는 블로그 풀이
 #재귀를 응용했다. 난 왜 이생각을 못했을까?
