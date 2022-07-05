@@ -3,7 +3,7 @@ input = sys.stdin.readline
 
 n, k1 = map(int, input().split())
 data = [list(map(int, input().split())) for _ in range(n)]
-
+'''
 mmax = 0
 def combination(n, k):
     global mmax, k1
@@ -28,7 +28,17 @@ def combination(n, k):
 
 for i in range(1, n+1):
     semi = combination(data, i)
-
-print(mmax)
-
+'''
 #메모리초과가 떳다 어떻게하면 다 계산하지 않고 선택적으로 사용할 수 있을까?
+#dp를 이용하자
+dp = [[0] * (k1 + 1) for _ in range(n + 1)]
+
+
+for i in range(1, n+1):
+    pick = data[i-1]
+    for j in range(1, k1 + 1):
+        if j - pick[0] < 0:
+            dp[i][j] = dp[i-1][j]
+            continue
+        dp[i][j] = max(dp[i-1][j], dp[i-1][j-pick[0]] + pick[1])
+print(dp[-1][-1])
