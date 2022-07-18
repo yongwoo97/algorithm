@@ -61,7 +61,7 @@ def quick(data):
         print(i, j)
         while data[i] <= data[mid] and i < len(data)-1:
             i += 1
-        while data[j] >= data[mid] and j > 0:
+        while data[j] > data[mid] and j > 0:
             j -= 1
         print(i, j, 'hello')
         if j <= i:
@@ -73,5 +73,5 @@ def quick(data):
         data[i], data[j] = data[j], data[i]
 
     return quick(data[0:mid]) + [data[mid]] + quick(data[mid+1:])
-arr = [5, 3, 2, 100, 7]
+arr = [5, 3, 2, 2, 100, 7]
 print(quick(arr))
