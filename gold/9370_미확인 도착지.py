@@ -28,8 +28,16 @@ for _ in range(test):
     s, g, h = map(int, input().split())
 
     data = {i:[] for i in range(1, n+1)}
+
+    rem = 0
     for _ in range(m):
         a,b,c = map(int, input().split())
+
+        if g == a and h == b:
+            rem = c
+        elif g == b and h == a:
+            rem = c
+
         data[a].append((b,c))
         data[b].append((a,c))
 
@@ -54,7 +62,7 @@ for _ in range(test):
         if i == g or i == h:
             final.append(i)
             continue
-        if dist1 + r2[i - 1] <= r1[i - 1] and dist2 + r3[i - 1] <= r1[i - 1]:
+        if dist1 + rem + r3[i - 1] <= r1[i - 1] and dist2 + rem + r2[i - 1] <= r1[i - 1]:
             final.append(i)
     final.sort()
 
