@@ -9,6 +9,12 @@ max_idx = 0
 for i in range(n):
     maxx = arr[i]
     temp = [data[i]]
+    k=[]
+
+    #nlogn 수준으로 찾으려면
+    #여기서 이분 탐색을 적용해야하네
+    #근데 어떻게 적용 할 수 가 있지?
+    
     for j in range(i-1, -1, -1):
         if data[i] > data[j]:
             temp1 = maxx

@@ -18,8 +18,6 @@ def travel(cnt, cur):
     return result
 
 
-
-
 while True:
     n = input()
     if n:
