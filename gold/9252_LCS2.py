@@ -31,8 +31,6 @@ for i in range(len(s1)):
 
 data = []
 def dfs(x, y):
-    
-    #여기 분기처리에 문제가 있을것 같은데
     global data, s1, s2, dp
     if x == 0 and y == 0:
         if s2[x] == s1[y]:
