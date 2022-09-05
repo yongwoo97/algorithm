@@ -14,4 +14,7 @@ for i in result:
     for j in result:
         if round(i+j, 5) == 0.1:
             print(f'{i} + {j} = {round(i+j, 5)}')
-            exit()
+            #exit()
+
+if not None:
+    print('he')
