@@ -25,13 +25,16 @@ def search(mapp):
                 if counter == k:
                     j += 1
                     for x in range(1, k+1):
-                        bridge[i][j-x] = 1
+                        if j - x > -1:
+                            bridge[i][j-x] = 1
                     continue
                 else:
                     break
             elif mapp[i][j] == mapp[i][j+1] + 1:
                 counter = 0
                 for e in range(j+1, j+k+1):
+                    if e > n - 1:
+                        break
                     if mapp[i][e] == mapp[i][j+1] and bridge[i][e] == 0:
                         counter += 1
                     else:
@@ -41,7 +44,8 @@ def search(mapp):
                 if counter >= k:
                     j += 1
                     for x in range(k):
-                        bridge[i][x+j] = 1
+                        if x + j < n:
+                            bridge[i][x+j] = 1
                     continue
                 else:
                     break
