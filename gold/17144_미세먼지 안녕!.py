@@ -44,24 +44,31 @@ for i in range(t):
     data = deepcopy(cp)
     fr = machine[0][0]
     sr = machine[1][0]
-
+   # print(data)
     for x in range(fr-1, -1, -1):
         if data[x+1][0] != -1:
-            data[x+1] = data[x][0]
-    data[0] = data[0][1:].append(0)
+            data[x+1][0] = data[x][0]
+    data[0] = data[0][1:]
+    #print(data)
+    data[0].append(0)
+    #print(data)
     for x in range(1, fr+1):
-        data[x][-1] = data[x+1][-1]
+        data[x-1][m-1] = data[x][m-1]
 
     data[fr] = [-1, 0] + data[fr][1:-1]
 
     for x in range(sr+1, n):
         if data[x-1][0] != -1:
-            data[x-1] = data[x][0]
-    data[n] = data[n][1:].append(0)
+            data[x-1][0] = data[x][0]
+    data[n-1] = data[n-1][1:]
+    data[n-1].append(0)
+
     for x in range(n-1, sr, -1):
         data[x][-1] = data[x-1][-1]
     data[sr] = [-1, 0] + data[sr][1:-1]
-
+   # for y in data:
+    #    print(*y)
+    #break
 result = 0
 for i in range(n):
     for j in range(m):
