@@ -8,18 +8,24 @@ n, c = map(int, input().split())
 data = [list(map(int, input().split())) for _ in range(c)]
 
 peo = {}
-p = [float('inf')] * (1101)
+p = [float('inf')] * (6000)
+
 for k, e in data:
-    peo[e] = k
+    if e in peo:
+        peo[e] = min(peo[e], k)
+    else:
+        peo[e] = k
+
 
 p[0] = 0
 
-for i in range(1, 1101):
+for i in range(1, 2000):
     for j in peo:
-        if 0 <= i -j < 1101:
+        if 0 < i -j:
             p[i] = min(p[i-j] + peo[j], p[i])
         else:
             if j >= i:
                 p[i] = min(p[i], peo[j])
+
 print(p[n])
 
