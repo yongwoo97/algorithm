@@ -1,50 +1,53 @@
 import sys
+sys.setrecursionlimit(100000)
 input = sys.stdin.readline
 
-target = input()
-num = int(input())
-if num != 0:
+n = int(input().rstrip())
+k = int(input())
+a = [1] * 10
+if k > 0:
     data = list(map(int, input().split()))
-if target == '100':
-    print(0)
-    exit()
-
-button = [1] *10
-for i in data:
-    button[i] = 0
-
-int_target = int(target)
 
 
-count = 0
+    for i in data:
+        a[i] =0
+    #고장난 버튼들은 0 처리
 
-from copy import deepcopy
-copy_target = list(deepcopy(target))
-for e, i in enumerate(target):
-    int_i = int(i)
-    if button[int_i]:
-        count += 1
-    else:
-        for k in range(1, 11):
+nn = str(n)
 
-            next_step = -1
-            pre_step = -1
+minn = float('inf')
+result = '5000000'
+#print(int(''))
+def dfs(s):
+    global nn, a, minn, result
 
-            if 0 <= int_i + k < 11:
-                if data[int_i + k]:
-                    next_step = int_i + k
+    if len(nn) + 1 < len(s):
+        return
 
-            if 0 <= int_i - k < 11:
-                if data[int_i - k]:
-                    pre_step = int_i - k
-
-            n_next_step = str(next_step)
-            temp_target1 = copy_target[e]
-            n_pre_step = str(pre_step)
-
-            n_num = ''.join(copy
+    if len(nn) + 1 >= len(s) >= len(nn)-1:
+        if len(s) > 0 and minn > len(s) + abs(int(s)-n):
+            minn = len(s) + abs(int(s)-n)
+            result = s
+            #print(result, minn)
+            if len(nn) + 1 == len(s):
+                return
 
 
+    for i in range(10):
+        if a[i] == 1:
+            dfs(s + str(i))
+
+dfs('')
+
+result = len(result) + abs(int(result) - n)
+
+#만약 버튼 + 숫자 조합보다 버튼이 더 가까울경우
+if sum(a) == 0:
+    print(abs(n-100))
+elif result > abs(n-100):
+    print(abs(n-100))
+else:
+    print(result)
 
 
 
