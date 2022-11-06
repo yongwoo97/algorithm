@@ -17,6 +17,7 @@ for _ in range(n-1):
     node[b].append([a,c])
 
 data =[]
+
 for _ in range(m):
     a, b = map(int, input().split())
     data.append([a, b])
