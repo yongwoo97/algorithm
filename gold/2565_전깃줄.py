@@ -20,6 +20,5 @@ for i in range(501):
 
 
     maxx = max(maxx, dp[i])
-#print(data)
-#print(dp)
+
 print(n-maxx)
