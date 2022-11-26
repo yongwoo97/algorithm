@@ -1,42 +1,16 @@
 import sys
-from itertools import permutations
-
+from collections import defaultdict
 input = sys.stdin.readline
-diction = {}
-
-n = int(input())
-for _ in range(n):
-    line = input().rstrip()
-    diction[line] = 1
-
-m = int(input())
-#from copy import deepcopy
-for _ in range(m):
-    line = input().rstrip().split()
-    result = 0
-
-    for i in line:
-
-        if len(i) < 3:
-            if i in diction:
-                if result == 0:
-                    result += 1
-                else:
-                    result *= 1
-        else:
-            ni = i[1:-1]
-            permute = set(list(permutations(ni, len(ni))))
-
-            count = 0
-
-            for k in permute:
-                l = list(k)
-                new_word = i[0] + ''.join(l) + i[-1]
-                if new_word in diction:
-                    count += 1
-
-            if result == 0:
-                result += count
-            else:
-                result *= count
-    print(result)
+dic = defaultdict(dict)
+for _ in range(int(input())):
+    line = input().strip()
+    i = line[0]+line[-1] if len(line)>1 else line[0]
+    k = ''.join(sorted(line[1:-1]))
+    dic[i][k] = dic[i].get(k,0)+1
+for _ in range(int(input())):
+    ans = 1
+    for line in input().strip().split():
+        i = line[0]+line[-1] if len(line)>1 else line[0]
+        k = ''.join(sorted(line[1:-1]))
+        ans *= dic[i].get(k,0)
+    print(ans)
