@@ -25,3 +25,39 @@ for i in range(2, n):
 result.sort()
 for i in result:
     print(i)
+
+from copy import deepcopy
+def comb(a, b):
+    result = []
+    if b == 1:
+        for e in a:
+            result.append([e])
+        return result
+
+
+
+    for i in range(len(a)-1):
+        pivot = [a[i]]
+        semi = comb(a[i+1:], b-1)
+
+        for e in semi:
+            s = pivot + e
+            result.append(s)
+
+    return result
+
+def perm(a, b):
+    result = []
+
+    if b == 1:
+        for e in a:
+            result.append([e])
+        return result
+
+    for i in range(len(a)):
+        pivot =[a[i]]
+        semi = perm(a[:i] + a[i+1:], b-1)
+        for e in semi:
+            result.append(pivot + e)
+    return result
+print(perm(['a', 'b', 'c', 'd'], 3))
