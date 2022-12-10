@@ -1,4 +1,5 @@
 import sys
+'''
 n = int(input())
 data = []
 for _ in range(n):
@@ -23,3 +24,30 @@ for d in range(n):
     result += minn
 
 print(result)
+'''
+#dp 사용하면 메모리 초과
+#그리디하게 접근하면 틀림
+#힙큐로 접근하면 되었네. 왜 이런 풀이를 떠올리는게 쉽지가 않을까?
+#.... 분발하자
+
+input = sys.stdin.readline
+import heapq
+#최소힙이고
+q = []
+n = int(input())
+for _ in range(n):
+    line = int(input())
+    heapq.heappush(q, line)
+
+result = 0
+while len(q) > 1:
+    item_1 = heapq.heappop(q)
+    item_2 = heapq.heappop(q)
+
+    semi = item_1 + item_2
+    result += semi
+    heapq.heappush(q, semi)
+
+print(result)
+
+
