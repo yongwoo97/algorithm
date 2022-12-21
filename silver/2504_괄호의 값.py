@@ -1,33 +1,39 @@
+bracket = list(input())
 
-line = input().rstrip()
-visited = [0] * len(line)
-def func(start, cur):
-    global visited
-    if line[start] == ')' and cur == '(':
-        visited[start] = 1
-        return 1
-    elif line[start] == ']' and cur == '[':
-        visited[start] = 1
-        return 1
+stack = []
+answer = 0
+tmp = 1
 
-    result = 0
-    for i in range(start, len(line)-1):
-        if cur == '[' and line[i] == ']':
-            return result
-        if cur == '(' and line[i] == ')':
-            return result
-        if visited[i] == 1:
-            continue
-        if line[i] == '(':
-            result += (2 * func(i+1, '('))
-        elif line[i] == '[':
-            result += (3 * func(i+1, '['))
-        visited[i] = 1
-    #print(result)
-    return result
-r = 0
-for i in range(len(line)):
-    if visited[i] == 0:
-        r += func(i, '')
-        print(r)
-print(r)
+for i in range(len(bracket)):
+
+    if bracket[i] == "(":
+        stack.append(bracket[i])
+        tmp *= 2
+
+    elif bracket[i] == "[":
+        stack.append(bracket[i])
+        tmp *= 3
+
+    elif bracket[i] == ")":
+        if not stack or stack[-1] == "[":
+            answer = 0
+            break
+        if bracket[i-1] == "(":
+            answer += tmp
+        stack.pop()
+        tmp //= 2
+
+    else:
+        if not stack or stack[-1] == "(":
+            answer = 0
+            break
+        if bracket[i-1] == "[":
+            answer += tmp
+
+        stack.pop()
+        tmp //= 3
+
+if stack:
+    print(0)
+else:
+    print(answer)
