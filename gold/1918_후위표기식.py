@@ -18,6 +18,7 @@ while i < len(a):
             result += stack.pop()
         if stack and stack[-1] in ['*', '/']:
             result += stack.pop()
+
     elif cur == ')':
         while stack and stack[-1] != '(':
             result += stack.pop()
