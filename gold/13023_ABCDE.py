@@ -7,7 +7,6 @@ for _ in range(m):
     graph[a].append(b)
     graph[b].append(a)
 
-
 def dfs(x, count):
     global visited, n, m, graph
 
