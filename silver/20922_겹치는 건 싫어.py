@@ -8,6 +8,7 @@ left,right=0,0
 check=[0]*100001
 answer=0
 cnt=0
+#어떻게 이렇게 간결하게 풄수 있는 것이지?깔끔하네
 while right<N:
     if check[arr[right]]<K:
         check[arr[right]]+=1
