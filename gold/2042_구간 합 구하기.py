@@ -10,8 +10,8 @@ for _ in range(n):
     line = int(input())
     data.append(line)
 
-tree = [0] * (n * 4) #충분한 트리의 공간을 선언해주고
-print(data)
+tree = [0] * (n * 5) #충분한 트리의 공간을 선언해주고
+#(data)
 #이제 아래는 구간합 트리를 초기화 해주는 함수. 재귀로 구현한다.
 #일단 아래 함수가 맞나 체크를 좀 해봐야겠지?
 
@@ -51,7 +51,7 @@ def sumquery(start, end, left, right, node):
 def update(start, end, node, idx, value):
     if idx < start or end < idx:
         return
-    tree[node] = value
+    tree[node] += value
 
     if start == end:
         return
@@ -63,7 +63,9 @@ def update(start, end, node, idx, value):
 for _ in range(m + k):
     a, b, c = map(int, input().split())
     if a == 1:
-        update(0, n-1, 1, b, c)
+        temp = c - data[b-1]
+        data[b-1] = c
+        update(0, n-1, 1, b-1, temp)
     else:
-        print(sumquery(0, n-1, b, c, 1))
-    print(tree)
+        print(sumquery(0, n-1, b-1, c-1, 1))
+   # print(tree)
