@@ -1,62 +1,81 @@
 import sys
-
 input = sys.stdin.readline
 n = int(input())
 data1 = list(input().rstrip())
-for i in range(0, n, 2):
-    data1[i] = int(data1[i])
+for i in range(n):
+    if i % 2 == 0:
+        data1[i] = int(data1[i])
 
-
-
-def dfs(data):
-
-    if len(data) == 1:
-        return data[0]
-    result = 0
-    for i in range(1, len(data), 2):
-
-        if data[i] == '+':
-            temp = data[i-1] + data[i+1]
-        elif data[i] == '-':
-            temp = data[i-1] - data[i+1]
+def cal(arr):
+    s = arr[0]
+    op = ''
+   # print(arr)
+   # print()
+    for i in range(1, len(arr)):
+        if i % 2 == 1:
+            op = arr[i]
         else:
-            temp = data[i-1] * data[i+1]
-
-        if i + 2 < len(data):
-            if data[i+2] == '+':
-                semi = temp + dfs(data[i+3:])
-            elif data[i+2] == '-':
-                semi = temp - dfs(data[i+3:])
+            if op == '+':
+                s += arr[i]
+            elif op == '-':
+                s -= arr[i]
             else:
-                semi = temp * dfs(data[i+3:])
-            result = max(semi, result)
-        result = max(temp, result)
-    return result
+                s *= arr[i]
+    return s
+
+from copy import deepcopy
+result = 0
+def dfs(start):
+    global result
+    if start >= n-4:
+        data_copy = deepcopy(data1)
+        idx = data1[start]
+
+        if idx == '+':
+            mid = data_copy[start - 1] + data_copy[start + 1]
+            data_copy = data_copy[:start - 1] + [mid] + data_copy[start + 2:]
+
+        elif idx == '-':
+            mid = data_copy[start - 1] - data_copy[start + 1]
+            data_copy = data_copy[:start - 1] + [mid] + data_copy[start + 2:]
+
+        else:
+            mid = data_copy[start - 1] * data_copy[start + 1]
+            data_copy = data_copy[:start - 1] + [mid] + data_copy[start + 2:]
+        result = max(result, cal(data_copy))
+        return [start]
 
 
-re = 0
-for i in range(1, len(data1), 2):
-    if i == 1:
-        pre = dfs(data1)
-        re = max(re, pre)
-        print(re, '1235dsf')
-        continue
-    pre = data1[0]
-    for j in range(3, i-2, 2):
-        if data1[j] == '+':
-            pre += data1[j+1]
-        elif data1[j] == '-':
-            pre -= data1[j+1]
-        else:
-            pre *= data1[j+1]
-    if  i - 2 > 0:
-        if data1[i-2] == '+':
-            s = pre + dfs(data1[i-1:])
-        elif data1[i-2] == '-':
-            s = pre - dfs(data1[i-1:])
-        else:
-            s = pre * dfs(data1[i-1:])
-        re = max(re, s)
-    print(re)
-    re = max(pre, re)
-print(dfs(data1))
+
+    for i in range(start + 4, n, 2):
+        q = [start]
+      #  print(i)
+      #  print(dfs(i))
+        q += dfs(i)
+      #  print(q)
+        data_copy = deepcopy(data1)
+        count = 0
+        for j in range(len(q)):
+            idx = data1[q[j]]
+
+            if idx == '+':
+                mid = data1[q[j]-1] + data1[q[j] + 1]
+                data_copy = data_copy[:q[j] + (count * -1 * 2) -1] + [mid] + data_copy[q[j] + (count * -2) +2:]
+
+            elif idx == '-':
+                mid = data1[q[j] - 1] - data1[q[j] + 1]
+                data_copy = data_copy[:q[j] + (count * -2) - 1] + [mid] + data_copy[q[j] + (count * -2) + 2:]
+
+            else:
+                mid = data1[q[j] - 1] * data1[q[j] + 1]
+                data_copy = data_copy[:q[j] + (count * -2) - 1] + [mid] + data_copy[q[j] + (count * -2) + 2:]
+            count += 1
+      #  print(q)
+        result = max(result, cal(data_copy))
+    return [start]
+for i in range(1, n, 2):
+    dfs(i)
+  #  print()
+result = max(result, cal(data1))
+
+print(result)
