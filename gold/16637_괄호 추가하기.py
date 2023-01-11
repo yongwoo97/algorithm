@@ -24,58 +24,53 @@ def cal(arr):
     return s
 
 from copy import deepcopy
-result = 0
-def dfs(start):
-    global result
-    if start >= n-4:
-        data_copy = deepcopy(data1)
-        idx = data1[start]
 
-        if idx == '+':
-            mid = data_copy[start - 1] + data_copy[start + 1]
-            data_copy = data_copy[:start - 1] + [mid] + data_copy[start + 2:]
-
-        elif idx == '-':
-            mid = data_copy[start - 1] - data_copy[start + 1]
-            data_copy = data_copy[:start - 1] + [mid] + data_copy[start + 2:]
-
-        else:
-            mid = data_copy[start - 1] * data_copy[start + 1]
-            data_copy = data_copy[:start - 1] + [mid] + data_copy[start + 2:]
-        result = max(result, cal(data_copy))
-        return [start]
+def reduce(arr):
+    global data1
 
 
+    final = []
 
-    for i in range(start + 4, n, 2):
-        q = [start]
-      #  print(i)
-      #  print(dfs(i))
-        q += dfs(i)
-      #  print(q)
-        data_copy = deepcopy(data1)
-        count = 0
-        for j in range(len(q)):
-            idx = data1[q[j]]
+    i = 0
+    while i < len(data1):
 
-            if idx == '+':
-                mid = data1[q[j]-1] + data1[q[j] + 1]
-                data_copy = data_copy[:q[j] + (count * -1 * 2) -1] + [mid] + data_copy[q[j] + (count * -2) +2:]
-
-            elif idx == '-':
-                mid = data1[q[j] - 1] - data1[q[j] + 1]
-                data_copy = data_copy[:q[j] + (count * -2) - 1] + [mid] + data_copy[q[j] + (count * -2) + 2:]
-
+        if i in arr:
+            x = final.pop()
+            if data1[i] == '+':
+                mid = x + data1[i+1]
+            elif data1[i] == '-':
+                mid = x - data1[i+1]
             else:
-                mid = data1[q[j] - 1] * data1[q[j] + 1]
-                data_copy = data_copy[:q[j] + (count * -2) - 1] + [mid] + data_copy[q[j] + (count * -2) + 2:]
-            count += 1
-      #  print(q)
-        result = max(result, cal(data_copy))
-    return [start]
+                mid = x * data1[i+1]
+            final.append(mid)
+            i += 2
+        else:
+            final.append(data1[i])
+            i += 1
+
+    return cal(final)
+
+
+
+
+result = float('-inf')
+def dfs(start, pre):
+    global result
+
+    if start >= len(data1) - 5:
+
+        result = max(result, reduce(pre))
+       # print(pre, reduce(pre))
+        return
+
+    for e in range(start + 4, len(data1), 2):
+        dfs(e, pre + [e])
+    result = max(result, reduce(pre))
+
+
 for i in range(1, n, 2):
-    dfs(i)
-  #  print()
-result = max(result, cal(data1))
+    dfs(i, [i])
+
+result = max(result, reduce([]))
 
 print(result)
