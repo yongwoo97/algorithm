@@ -67,14 +67,10 @@ def recur(mapp, x, y):
                 for e in range(1, 10):
                     if check(mapp, i, j, e):
                         mapp[i][j] = e
-                   #     for t in mapp:
-                   #         print(t)
-                   #     print()
                         if finish(mapp):
                             result = mapp
                             for t in result:
                                 print(''.join(list(map(str, t))))
-                        #    print(result)
                             exit()
                         recur(mapp, i, j)
 
