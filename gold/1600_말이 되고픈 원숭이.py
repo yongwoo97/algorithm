@@ -22,6 +22,7 @@ def bfs():
     dy = [0, 1, 0, -1]
     dy1 = [1, -1, 1, -1, 2, -2, 2, -2]
     dp[0][0] = [0] * m
+
     while q:
 
         c, h, x, y = q.popleft()
