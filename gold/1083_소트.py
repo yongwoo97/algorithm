@@ -5,40 +5,26 @@
 n = int(input())
 data = list(map(int, input().split()))
 s = int(input())
-dif = 0
-idx = 0
-result = []
-from copy import deepcopy
-def recur(start, data, k):
-    global result, dif, n, s, idx
 
-    if k == s:
-        count = 0
-        first_appear = 0
-        for i in range(n-1):
-            if data[i] > data[i+1]:
-                count += 1
-                first_appear = i
-      #  print(count, first_appear, data, dif)
-        if count > dif:
-            dif = count
-            result = deepcopy(data)
-       #     print('hello')
-       #     print(result)
-        elif count == dif:
-            if idx > first_appear:
-                dif = count
-                result = data
-                idx = first_appear
-        return
+start = 0
+while s > 0 and start < n:
 
-    for i in range(start, n-1):
-        if data[i] > data[i+1]:
-            continue
-        data[i], data[i+1] = data[i+1], data[i]
-        recur(i + 1, data, k+1)
-        data[i], data[i + 1] = data[i + 1], data[i]
+    count = 0
+    maxx = data[start]
 
-recur(0, data, 0)
-print(*result)
+    for i in range(start + 1, min(start + s + 1, n)):
+        if data[i] > maxx:
+            maxx = data[i]
+            count = i - start
 
+    s -= count
+
+    for j in range(count+start, start, -1):
+        data[j] = data[j-1]
+    data[start] = maxx
+   # data[start], data[count + start] = data[count + start], data[start]
+
+    start += 1
+
+print(*data)
+#도대체 어떤 차이가 이런 결과물을 만든것이지?
