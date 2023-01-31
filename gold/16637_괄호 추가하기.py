@@ -9,8 +9,7 @@ for i in range(n):
 def cal(arr):
     s = arr[0]
     op = ''
-   # print(arr)
-   # print()
+
     for i in range(1, len(arr)):
         if i % 2 == 1:
             op = arr[i]
@@ -23,17 +22,14 @@ def cal(arr):
                 s *= arr[i]
     return s
 
-from copy import deepcopy
-
 def reduce(arr):
     global data1
-
 
     final = []
 
     i = 0
     while i < len(data1):
-
+        #내가 짯는데 아래 의미를 이해할 수 가 없네.
         if i in arr:
             x = final.pop()
             if data1[i] == '+':
@@ -49,9 +45,6 @@ def reduce(arr):
             i += 1
 
     return cal(final)
-
-
-
 
 result = float('-inf')
 def dfs(start, pre):

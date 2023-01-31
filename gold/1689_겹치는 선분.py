@@ -16,6 +16,7 @@ check = True
 count = 1
 result = 0
 result = max(result, count)
+
 while q:
     x, y = heapq.heappop(q)
     if check:

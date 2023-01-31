@@ -2,47 +2,43 @@
 import sys
 input = sys.stdin.readline
 n, k = map(int, input().split())
-data = []
+data = [0] * 1000001
 result = []
 
-
-set = set()
 for _ in range(n):
-    line = list(map(int, input().split()))
-    data.append(line)
-    set.add(line[1])
-set = list(set)
-set.sort()
-rr = 0
+    a, b = list(map(int, input().split()))
+    for e in range(a+1, b+1):
+        data[e] += 1
+for i in range(1, len(data)):
+    data[i] += data[i-1]
+
 i = 0
-j = set[rr]
+j = 0
 
-#종료 조건은 어떻게 해줘야 하지?
-while i <= j:
-    count = 0
-    for x, y in data:
-        right = min(j, y)
-        left = max(i, x)
-        if left < right:
-            count += (right - left)
-    print(i, j)
-    if count == k:
+while j < len(data):
+    check = False
+    c = data[j]
+    if c < k:
+        j += 1
+    elif c == k:
         result.append([i, j])
-        rr += 1
-        if rr > len(set) - 1:
-            rr = len(set) - 1
-        j = set[rr]
+        break
+    elif c > k:
+        for e in range(j-1, -1, -1):
+            if data[j] - data[e] == k:
+                result.append([e, j])
+                check = True
+                break
+            elif data[j] - data[e] < k:
+                continue
+            else:
+                break
+        if check:
+            break
+        j += 1
 
-    elif count > k:
-        i += 1
-    elif count < k:
-        rr += 1
-        if rr > len(set) - 1:
-            rr = len(set) - 1
-        j = set[rr]
-print(result)
 if not result:
     print(0, 0)
 else:
     result.sort()
-    print(*result[0])
+    print(result[0][0], result[0][1])
