@@ -1,24 +1,16 @@
 n = int(input())
+data = [i for i in range(1, n+1)]
 
-s = 1
-for i in range(n, 1, -1):
-    if s % i == 0:
+summ = 1
+for i in range(n):
+    if data[i] == 1:
         continue
+    summ *= data[i]
 
-    start = int(i ** 0.5)
-    while start >= 1:
-        ss = s
+    for j in range(i+1, n):
+        if data[j] == 1:
+            continue
+        elif data[j] % data[i] == 0:
+            data[j] //= data[i]
 
-        if i % start == 0:
-            right = i // start
-            #print(ss, start, right, 'here')
-            if ss % start != 0:
-                s *= start
-            elif ss % start == 0:
-                ss //= start
-                if ss <= 0:
-                    ss = 1
-            if ss % right != 0:
-                s *= right
-        start -= 1
-print(s % 987654321)
+print(summ % 987654321)
