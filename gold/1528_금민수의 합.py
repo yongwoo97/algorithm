@@ -1,40 +1,28 @@
 n = int(input())
 
-def func(count, pre):
-    result = []
-    if count == 0:
-        return []
-    for i in ['4', '7']:
-        result.append(int(pre + i))
-        result += func(count - 1, pre + i)
-    return result
+numbers = [4, 7, 44, 47, 74, 77, 444, 447, 474, 477, 744, 747, 774, 777, 4444, 4447, 4474, 4477, 4744, 4747, 4774, 4777, 7444, 7447, 7474, 7477, 7744, 7747, 7774, 7777, 44444, 44447, 44474, 44477, 44744, 44747, 44774, 44777, 47444, 47447, 47474, 47477, 47744, 47747, 47774, 47777, 74444, 74447, 74474, 74477, 74744, 74747, 74774, 74777, 77444, 77447, 77474, 77477, 77744, 77747, 77774, 77777, 444444, 444447, 444474, 444477, 444744, 444747, 444774, 444777, 447444, 447447, 447474, 447477, 447744, 447747, 447774, 447777, 474444, 474447, 474474, 474477, 474744, 474747, 474774, 474777, 477444, 477447, 477474, 477477, 477744, 477747, 477774, 477777, 744444, 744447, 744474, 744477, 744744, 744747, 744774, 744777, 747444, 747447, 747474, 747477, 747744, 747747, 747774, 747777, 774444, 774447, 774474, 774477, 774744, 774747, 774774, 774777, 777444, 777447, 777474, 777477, 777744, 777747, 777774, 777777]
 
-numbers = func(6, '')
-numbers.sort()
-#print(numbers)
-result = {i:[] for i in range(1, 1000001)}
-result[4].append(4)
-result[7].append(7)
+result = {i:[i] for i in numbers}
+#count = 0
 from copy import deepcopy
 for i in range(1, n+1):
-    if not result[i]:
+    if i not in result:
         continue
-
     for j in numbers:
-        if i + j <= n and not result[i + j]:
+        #count += 1
+        if i + j <= n and i + j in result:
+            if len(result[i]) < len(result[i+j]) - 1:
+                    result[i+j] = deepcopy(result[i])
+                    result[i+j].append(j)
+        elif i + j not in result:
             result[i + j] = deepcopy(result[i])
             result[i + j].append(j)
+        else:
+            break
 
-
-        if i + j <= n and len(result[i]) < len(result[i+j]) -1:
-            result[i+j] = deepcopy(result[i])
-            result[i+j].append(j)
-    #print(result[n])
-
-
-
-if result[n]:
+if n in result:
     result[n].sort()
     print(*result[n])
 else:
     print(-1)
+#print(result)
