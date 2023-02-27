@@ -15,60 +15,54 @@ else:
     r_b = 0
     result = '-1'
     for i in range(1, n):
-        a = i
-        b = n - i
+        a = n - i
+        b = i
 
         dif_x = x1 - x
         dif_y = y1 - y
 
         moc_a = dif_x // a
         moc_b = dif_y // b
-        print(moc_a, moc_b)
+       # print(moc_a, moc_b)
         if abs(moc_a - moc_b) == 0:
-            if dif_x % a == 0 and dif_y % b == 0:
-                result = 'R' * a + 'U' * b
-            else:
-                r_a = dif_x - (moc_a * a)
-                r_b = dif_y - (moc_b * b)
-                result = 'R' * r_a + 'U' * r_b + 'R' * (a - r_a) + 'U' * (b - r_b)
+
+            r_a = dif_x - (moc_a * a)
+            r_b = dif_y - (moc_b * b)
+            result = 'R' * r_a + 'U' * r_b + 'R' * (a - r_a) + 'U' * (b - r_b)
             r.append(result)
 
 
         elif abs(moc_a - moc_b) == 1:
-            if dif_x % a == 0 and dif_y % b == 0:
-                if moc_a < moc_b:
-                    r_a = dif_x - (moc_a * a)
-                    r_b = dif_y - ((moc_b - 1) * b)
-                    result = 'R' * r_a + 'U' * r_b + 'R' * (a - r_a) + 'U' * (b - r_b)
-                else:
-                    r_a = dif_x - ((moc_a -1) * a)
-                    r_b = dif_y - (moc_b * b)
-                    result = 'R' * r_a + 'U' * r_b + 'R' * (a - r_a) + 'U' * (b - r_b)
-                #print(result)
-                r.append(result)
-            elif dif_x % a == 0 and dif_y % b != 0:
-                if moc_b > moc_a:
+
+            if moc_a < moc_b:
+                if dif_x % a == 0 and dif_y % b == 0:
+                    moc_b -= 1
+                elif dif_x % a == 0 and dif_y % b != 0:
                     continue
+                elif dif_x % a != 0 and dif_y % b == 0:
+                    moc_b -= 1
                 else:
-                    r_a = dif_x - ((moc_a - 1) * a)
-                    r_b = dif_y - (moc_b * b)
-                    result = 'R' * r_a + 'U' * r_b + 'R' * (a - r_a) + 'U' * (b - r_b)
-                   # print(result)
-                    r.append(result)
-            elif dif_x % a != 0 and dif_y % b == 0:
-                if moc_b < moc_a:
                     continue
-                else:
-                    r_a = dif_x - (moc_a * a)
-                    r_b = dif_y - ((moc_b - 1) * b)
-                    result = 'R' * r_a + 'U' * r_b + 'R' * (a - r_a) + 'U' * (b - r_b)
-                    #print(result)
-                    r.append(result)
+                r_a = dif_x - (moc_a * a)
+                r_b = dif_y - (moc_b * b)
+                result = 'R' * r_a + 'U' * r_b + 'R' * (a - r_a) + 'U' * (b - r_b)
             else:
-                continue
+                if dif_x % a == 0 and dif_y % b == 0:
+                    moc_a -= 1
+                elif dif_x % a == 0 and dif_y % b != 0:
+                    moc_a -= 1
+                elif dif_x % a != 0 and dif_y % b == 0:
+                    continue
+                else:
+                    continue
+                r_a = dif_x - (moc_a * a)
+                r_b = dif_y - (moc_b * b)
+                result = 'R' * r_a + 'U' * r_b + 'R' * (a - r_a) + 'U' * (b - r_b)
+            r.append(result)
     if not r:
         print(-1)
     else:
+       # print(r)
         r.sort()
-        #print(r)
+
         print(r[0])
