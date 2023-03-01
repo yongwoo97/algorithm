@@ -101,6 +101,3 @@ def func(pos_x, pos_y):
                 visited[i] = 0
 
 func(0, 0)
-#print(answer_top)
-#print(visited)
-#print(answer)
